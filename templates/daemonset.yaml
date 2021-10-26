@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: cloudflared-set
+spec:
+  selector:
+    matchLabels:
+      name: cloudflared-pod
+  template:
+    metadata:
+      labels:
+        name: cloudflared-pod
+      annotations:
+        checksum/tunnel-id: {{ sha256sum .Values.tunnelID }}
+        checksum/ingress: {{ .Values.ingress | toJson | sha256sum }}
+        checksum/auth: {{ .Values.auth | toJson | sha256sum }}
+        checksum/warp-routing: {{ .Values.warpRouting | toJson | sha256sum }}
+    spec:
+      containers:
+      - args:
+        - tunnel
+        - --no-autoupdate
+        - --config
+        - /etc/cloudflared/config.yaml
+        - run
+        name: cloudflared-container
+        image: {{ .Values.cloudflaredImage }}
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+        - mountPath: /etc/cloudflared/{{ required "A valid .Values.tunnelID entry required!" .Values.tunnelID }}.json
+          name: tunnel-secret-vol
+          subPath: {{ required "A valid .Values.tunnelID entry required!" .Values.tunnelID }}.json
+        - mountPath: /etc/cloudflared/config.yaml
+          name: cloudflared-config-vol
+          subPath: config.yaml
+      imagePullSecrets:
+      - name: tunnel-secret
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: tunnel-secret-vol
+        secret:
+          defaultMode: 420
+          optional: false
+          secretName: tunnel-secret
+      - configMap:
+          defaultMode: 420
+          name: cloudflared-config
+          optional: false
+        name: cloudflared-config-vol
+  updateStrategy:
+    rollingUpdate:
+      maxUnavailable: 1
+    type: RollingUpdate

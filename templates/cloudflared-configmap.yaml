@@ -1,0 +1,12 @@
+apiVersion: v1
+data:
+  config.yaml: |-
+    logDirectory: /var/log/cloudflared
+    tunnel: {{ required "A valid .Values.tunnelID entry required!" .Values.tunnelID }}
+    credentials-file: /etc/cloudflared/{{ required "A valid .Values.tunnelID entry required!" .Values.tunnelID }}.json
+    warp-routing:
+      enabled: {{ .Values.warpRouting }}
+    ingress: {{ toYaml .Values.ingress | nindent 6 }}
+kind: ConfigMap
+metadata:
+  name: cloudflared-config

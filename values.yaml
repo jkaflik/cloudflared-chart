@@ -1,0 +1,18 @@
+### Change this to use a different container image for cloudflared
+cloudflaredImage: cloudflare/cloudflared:2021.9.2
+
+### Argo Tunnel ID
+# tunnelID: your-tunnel-uuid-here
+
+### All of these values can be found in the auth json file generated on tunnel creation.
+# auth:
+#   accountTag:
+#   tunnelName:
+#   tunnelSecret:
+
+### Whether argo tunnel will route WARP traffic to local subnets
+warpRouting: false
+
+### Set up custom ingress rules here
+ingress:
+  - service: http_status:404
