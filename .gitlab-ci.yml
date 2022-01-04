@@ -1,5 +1,5 @@
 trigger_build:
-  stage: trigger
+  stage: deploy
   trigger:
     project: kylesferrazza/helm-charts
     branch: main
