@@ -2,3 +2,4 @@ name: cloudflared
 apiVersion: v2
 version: 0.1.0
 description: "Local chart to install cloudflared tunnels"
+icon: https://www.cloudflare.com/img/cf-facebook-card.png
