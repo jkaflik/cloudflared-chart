@@ -2,13 +2,13 @@
 cloudflaredImage: cloudflare/cloudflared:2021.9.2
 
 ### Argo Tunnel ID
-# tunnelID: your-tunnel-uuid-here
+tunnelID: ""
 
 ### All of these values can be found in the auth json file generated on tunnel creation.
-# auth:
-#   accountTag:
-#   tunnelName:
-#   tunnelSecret:
+auth:
+  accountTag: ""
+  tunnelName: ""
+  tunnelSecret: ""
 
 ### Whether argo tunnel will route WARP traffic to local subnets
 warpRouting: false
