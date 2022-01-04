@@ -1,5 +1,5 @@
 name: cloudflared
 apiVersion: v2
 version: 0.1.0
-description: "Local chart to install cloudflared tunnels"
+description: "cloudflared deployment for Argo Tunnel"
 icon: https://www.cloudflare.com/img/cf-facebook-card.png
