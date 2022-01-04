@@ -1,5 +1,5 @@
 ### Change this to use a different container image for cloudflared
-cloudflaredImage: cloudflare/cloudflared:2021.9.2
+cloudflaredImage: cloudflare/cloudflared:2021.12.4
 
 ### Argo Tunnel ID
 tunnelID: ""
