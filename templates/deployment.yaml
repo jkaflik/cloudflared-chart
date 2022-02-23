@@ -1,20 +1,16 @@
 apiVersion: apps/v1
-kind: DaemonSet
+kind: Deployment
 metadata:
-  name: cloudflared-set
+  name: cloudflared-deployment
 spec:
   selector:
     matchLabels:
-      name: cloudflared-pod
+      app: cloudflared
+  replicas: {{ .Values.replicaCount | int }}
   template:
     metadata:
       labels:
-        name: cloudflared-pod
-      annotations:
-        checksum/tunnel-id: {{ sha256sum .Values.tunnelID }}
-        checksum/ingress: {{ .Values.ingress | toJson | sha256sum }}
-        checksum/auth: {{ .Values.auth | toJson | sha256sum }}
-        checksum/warp-routing: {{ .Values.warpRouting | toJson | sha256sum }}
+        app: cloudflared
     spec:
       containers:
       - args:
@@ -24,7 +20,7 @@ spec:
         - /etc/cloudflared/config.yaml
         - run
         name: cloudflared-container
-        image: {{ .Values.cloudflaredImage }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: IfNotPresent
         volumeMounts:
         - mountPath: /etc/cloudflared/{{ required "A valid .Values.tunnelID entry required!" .Values.tunnelID }}.json
@@ -48,7 +44,3 @@ spec:
           name: cloudflared-config
           optional: false
         name: cloudflared-config-vol
-  updateStrategy:
-    rollingUpdate:
-      maxUnavailable: 1
-    type: RollingUpdate
