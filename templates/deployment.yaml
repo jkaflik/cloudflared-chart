@@ -11,6 +11,11 @@ spec:
     metadata:
       labels:
         app: cloudflared
+      annotations:
+        checksum/tunnel-id: {{ sha256sum .Values.tunnelID }}
+        checksum/ingress: {{ .Values.ingress | toJson | sha256sum }}
+        checksum/auth: {{ .Values.auth | toJson | sha256sum }}
+        checksum/warp-routing: {{ .Values.warpRouting | toJson | sha256sum }}
     spec:
       containers:
       - args:
