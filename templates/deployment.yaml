@@ -25,7 +25,7 @@ spec:
         - /etc/cloudflared/config.yaml
         - run
         name: cloudflared-container
-        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        image: "{{ .Values.image.repository }}:{{ default .Chart.AppVersion .Values.image.tag }}"
         imagePullPolicy: IfNotPresent
         volumeMounts:
         - mountPath: /etc/cloudflared/{{ required "A valid .Values.tunnelID entry required!" .Values.tunnelID }}.json
