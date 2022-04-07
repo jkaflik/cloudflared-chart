@@ -8,11 +8,11 @@ image:
 ### How many replicas to run
 replicaCount: 3
 
-### Argo Tunnel ID
-tunnelID: ""
-
 ### All of these values can be found in the auth json file generated on tunnel creation.
 auth:
+  # use existingSecret if you want to create secret not managed by this release
+  existingSecret: ""
+  tunnelID: ""
   accountTag: ""
   tunnelName: ""
   tunnelSecret: ""

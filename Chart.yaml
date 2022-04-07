@@ -1,6 +1,6 @@
 name: cloudflared
 apiVersion: v2
-version: 2022.3.4
+version: 0.0.1
 appVersion: 2022.3.4
 description: "cloudflared deployment for Argo Tunnel"
 icon: https://www.cloudflare.com/img/cf-facebook-card.png

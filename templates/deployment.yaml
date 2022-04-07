@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: cloudflared-deployment
+  name: {{ .Release.Name }}
 spec:
   selector:
     matchLabels:
@@ -43,7 +43,7 @@ spec:
         secret:
           defaultMode: 420
           optional: false
-          secretName: tunnel-secret
+          secretName: {{ default .Release.Name .Values.auth.existingSecret }}
       - configMap:
           defaultMode: 420
           name: cloudflared-config
